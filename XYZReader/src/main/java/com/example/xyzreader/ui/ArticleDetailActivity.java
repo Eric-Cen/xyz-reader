@@ -12,6 +12,7 @@ import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,8 @@ import com.example.xyzreader.data.ItemsContract;
  */
 public class ArticleDetailActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
+
+    private static final String TAG = "ArticleDetailActivity";
 
     private Cursor mCursor;
     private long mStartId;
@@ -87,6 +90,7 @@ public class ArticleDetailActivity extends AppCompatActivity
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
         mCursor = cursor;
+        Log.d(TAG, "onLoadFinished: before notifyDataSetChanged()");
         mPagerAdapter.notifyDataSetChanged();
 
         // Select the start ID
@@ -106,6 +110,7 @@ public class ArticleDetailActivity extends AppCompatActivity
                     if (mCursor.getLong(ArticleLoader.Query._ID) == mStartId) {
                         final int position = mCursor.getPosition();
                         mPager.setCurrentItem(position, false);
+                        Log.d(TAG, "onLoadFinished: after setCurrentItem()");
                         break;
                     }
 
